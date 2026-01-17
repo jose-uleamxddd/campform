@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
 import { Country, State } from '../../interfaces/country.interface';
@@ -48,7 +48,7 @@ export class Crossworlds {
       ageOfCamper: ['', Validators.required],
       tshirtSize: ['', Validators.required],
       parentName: ['', Validators.required],
-      whatsappNumber: ['', Validators.required],
+      whatsappNumber: ['', [Validators.required,Validators.minLength(10)]],
       busPlace: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       camperImage: [null, Validators.required] // Campo para la imagen

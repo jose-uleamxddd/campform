@@ -48,7 +48,7 @@ export class ManantialForm implements OnInit {
       ageOfCamper: ['', Validators.required],
       tshirtSize: ['', Validators.required],
       parentName: ['', Validators.required],
-      whatsappNumber: ['', Validators.required],
+      whatsappNumber: ['', [Validators.required,Validators.minLength(10)]],
       busPlace: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       camperImage: [null, Validators.required] // Campo para la imagen

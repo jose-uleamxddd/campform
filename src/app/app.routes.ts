@@ -37,6 +37,10 @@ export const routes: Routes = [
     {
         path: 'crossworlds-form',
         component: Crossworlds
+    },
+    {
+        path: '**',
+        redirectTo: 'principal-page'
     }
     
 ];

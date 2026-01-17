@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
+import { gsap } from "gsap";
 @Component({
-  selector: 'app-query-page',
+  selector: 'app-section-motion',
   imports: [],
-  templateUrl: './query-page.html',
+  templateUrl: './section-motion.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QueryPage { }
+export class SectionMotion { }

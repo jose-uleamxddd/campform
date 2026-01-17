@@ -2,7 +2,7 @@
     <!-- Header with improved design -->
     <app-up-bar/>
 
-    <div class="max-w-[95%] xl:max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-6 sm:py-8">
+    <div class="max-w-full sm:max-w-[95%] xl:max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 py-4 sm:py-6 md:py-8">
         <!-- Progress indicator -->
         <app-text-rotate [words]="textRotateWords()"></app-text-rotate>
 
@@ -11,7 +11,7 @@
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 <!-- Your Information Section -->
                 <div
-                    class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-3 sm:p-5 lg:p-7 mb-4 sm:mb-4 hover:shadow-xl transition-shadow">
+                    class="bg-white rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6 lg:p-7 mb-4 sm:mb-6 hover:shadow-xl transition-shadow">
                     <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
                         <div class="bg-emerald-100 p-2 sm:p-3 rounded-lg sm:rounded-xl">
                             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" fill="none" stroke="currentColor"
@@ -21,8 +21,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">{{ translationService.t().yourInformation }}</h2>
-                            <p class="text-xs sm:text-sm text-gray-500">{{ translationService.t().yourInformationDesc }}</p>
+                            <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{{ translationService.t().yourInformation }}</h2>
+                            <p class="text-sm sm:text-base text-gray-500">{{ translationService.t().yourInformationDesc }}</p>
                         </div>
                     </div>
 

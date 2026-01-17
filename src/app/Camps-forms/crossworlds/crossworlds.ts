@@ -10,6 +10,7 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { FormUtils } from '../../utils/form-utils';
 import { UpBar } from '../../components/shared/up-bar/up-bar';
 import { TextRotate } from "../../components/shared/text-rotate/text-rotate";
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-crossworlds',
@@ -33,6 +34,7 @@ export class Crossworlds {
   fb = inject(FormBuilder);
   supabaseService = inject(SupabaseService);
   countrySelectBar = inject(CountrySelectBar);
+  translationService = inject(TranslationService);
   formUtils = FormUtils;
 
 

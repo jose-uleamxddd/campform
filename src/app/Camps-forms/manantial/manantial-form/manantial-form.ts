@@ -11,6 +11,7 @@ import { FormUtils } from '../../../utils/form-utils';
 import { RouterLink } from "@angular/router";
 import { UpBar } from "../../../components/shared/up-bar/up-bar";
 import { TextRotate } from '../../../components/shared/text-rotate/text-rotate';
+import { TranslationService } from '../../../services/translation.service';
 
 @Component({
   selector: 'app-manantial-form',
@@ -33,6 +34,7 @@ export class ManantialForm implements OnInit {
   fb= inject(FormBuilder);
   supabaseService = inject(SupabaseService);
   countrySelectBar = inject(CountrySelectBar);
+  translationService = inject(TranslationService);
   formUtils = FormUtils;
   
 

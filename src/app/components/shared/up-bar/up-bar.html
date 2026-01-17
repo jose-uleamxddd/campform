@@ -6,13 +6,14 @@
                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
-                <span class="hidden sm:inline">Back</span>
+                <span class="hidden sm:inline">{{ translationService.t().back }}</span>
             </button>
             <div class="flex items-center gap-2 sm:gap-3">
-                <span class="text-xs sm:text-sm text-gray-500 hidden sm:inline">Language:</span>
+                <span class="text-xs sm:text-sm text-gray-500 hidden sm:inline">{{ translationService.t().language }}</span>
                 <button
+                    (click)="toggleLanguage()"
                     class="bg-emerald-600 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
-                    ES
+                    {{ currentLanguageLabel }}
                 </button>
             </div>
         </div>

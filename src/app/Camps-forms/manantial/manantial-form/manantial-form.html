@@ -21,17 +21,17 @@
                             </svg>
                         </div>
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Your Information</h2>
-                            <p class="text-xs sm:text-sm text-gray-500">Please provide your contact details</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">{{ translationService.t().yourInformation }}</h2>
+                            <p class="text-xs sm:text-sm text-gray-500">{{ translationService.t().yourInformationDesc }}</p>
                         </div>
                     </div>
 
                     <div class="space-y-4 sm:space-y-5">
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Email Address <span class="text-rose-500">*</span>
+                                {{ translationService.t().emailAddress }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
-                            <input type="email" formControlName="email" placeholder="example@email.com"
+                            <input type="email" formControlName="email" [placeholder]="translationService.t().emailPlaceholder"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-50 transition-all placeholder:text-gray-400" />
                             @if (formUtils.isValidField(formData, 'email'))
                             {
@@ -44,9 +44,9 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                             <div>
                                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                    First Name <span class="text-rose-500">*</span>
+                                    {{ translationService.t().firstName }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                                 </label>
-                                <input type="text" formControlName="firstName" placeholder="John"
+                                <input type="text" formControlName="firstName" [placeholder]="translationService.t().firstNamePlaceholder"
                                     class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-50 transition-all placeholder:text-gray-400" />
                                 @if (formUtils.isValidField(formData, 'firstName'))
                                 {
@@ -57,9 +57,9 @@
                             </div>
                             <div>
                                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                    Last Name <span class="text-rose-500">*</span>
+                                    {{ translationService.t().lastName }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                                 </label>
-                                <input type="text" formControlName="lastName" placeholder="Doe"
+                                <input type="text" formControlName="lastName" [placeholder]="translationService.t().lastNamePlaceholder"
                                     class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-50 transition-all placeholder:text-gray-400" />
                                 @if (formUtils.isValidField(formData, 'lastName'))
                                 {
@@ -73,7 +73,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                             <div>
                                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                    Country <span class="text-rose-500">*</span>
+                                    {{ translationService.t().country }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                                 </label>
                                 <select formControlName="country"
                                     class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
@@ -86,7 +86,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                    State <span class="text-rose-500">*</span>
+                                    {{ translationService.t().state }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                                 </label>
                                 <select formControlName="state"
                                     class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
@@ -110,7 +110,7 @@
                             </span>
                             }
                             <label class="text-xs sm:text-sm font-medium text-gray-700 leading-relaxed">
-                                This is a corporate/organization purchase
+                                {{ translationService.t().corporatePurchase }}
                             </label>
                         </div>
                     </div>
@@ -128,22 +128,22 @@
                             </svg>
                         </div>
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Camper Details</h2>
-                            <p class="text-xs sm:text-sm text-gray-500">Tell us about the camper</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">{{ translationService.t().camperDetails }}</h2>
+                            <p class="text-xs sm:text-sm text-gray-500">{{ translationService.t().camperDetailsDesc }}</p>
                         </div>
                     </div>
 
                     <div class="space-y-4 sm:space-y-5">
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Camper Gender <span class="text-rose-500">*</span>
+                                {{ translationService.t().camperGender }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <select formControlName="camperGender"
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'camperGender')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
-                                <option value="">Choose...</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="">{{ translationService.t().choose }}</option>
+                                <option value="male">{{ translationService.t().male }}</option>
+                                <option value="female">{{ translationService.t().female }}</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'camperGender')) {
                             <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData,
@@ -153,18 +153,18 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Age of Camper <span class="text-rose-500">*</span>
+                                {{ translationService.t().ageOfCamper }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <select formControlName="ageOfCamper"
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'ageOfCamper')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
-                                <option value="">Choose...</option>
-                                <option value="8">8 years</option>
-                                <option value="9">9 years</option>
-                                <option value="10">10 years</option>
-                                <option value="11">11 years</option>
-                                <option value="12">12 years</option>
-                                <option value="13">13 years</option>
+                                <option value="">{{ translationService.t().choose }}</option>
+                                <option value="8">8 {{ translationService.t().years }}</option>
+                                <option value="9">9 {{ translationService.t().years }}</option>
+                                <option value="10">10 {{ translationService.t().years }}</option>
+                                <option value="11">11 {{ translationService.t().years }}</option>
+                                <option value="12">12 {{ translationService.t().years }}</option>
+                                <option value="13">13 {{ translationService.t().years }}</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'ageOfCamper')) {
                             <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'ageOfCamper')
@@ -174,7 +174,7 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                T-shirt Size <span class="text-rose-500">*</span>
+                                {{ translationService.t().tshirtSize }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
                                 <button type="button" *ngFor="let size of ['XS', 'S', 'M', 'L', 'XL']"
@@ -190,9 +190,9 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Parent First & Last Name <span class="text-rose-500">*</span>
+                                {{ translationService.t().parentName }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
-                            <input type="text" formControlName="parentName" placeholder="Parent's full name"
+                            <input type="text" formControlName="parentName" [placeholder]="translationService.t().parentNamePlaceholder"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all placeholder:text-gray-400" />
                             @if (formUtils.isValidField(formData, 'parentName'))
                             {
@@ -204,7 +204,7 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                WhatsApp Number <span class="text-rose-500">*</span>
+                                {{ translationService.t().whatsappNumber }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <div class="relative">
                                 <div
@@ -229,22 +229,21 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Bus Pick-up Location <span class="text-rose-500">*</span>
+                                {{ translationService.t().busPickupLocation }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <select formControlName="busPlace"
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'busPlace')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
-                                <option value="">Choose...</option>
-                                <option value="CrossWorlds Center for Connections">CrossWrolds Center for Connections
+                                <option value="">{{ translationService.t().choose }}</option>
+                                <option value="CrossWorlds Center for Connections">{{ translationService.t().busOptionCrossworlds }}
                                 </option>
-                                <option value="Iglesia Verbo (Av 24 entre calle 17 y calle 20)">Iglesia Verbo (Av 24
-                                    entre calle 17 y calle 20)</option>
+                                <option value="Iglesia Verbo (Av 24 entre calle 17 y calle 20)">{{ translationService.t().busOptionVerbo }}</option>
                                 <option
                                     value="Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)">
-                                    Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)</option>
+                                    {{ translationService.t().busOptionManantial }}</option>
                                 <option
                                     value="No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)">
-                                    No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)
+                                    {{ translationService.t().busOptionNone }}
                                 </option>
                             </select>
                             @if (formUtils.isValidField(formData, 'busPlace')) {
@@ -255,17 +254,15 @@
 
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Payment Method <span class="text-rose-500">*</span>
+                                {{ translationService.t().paymentMethod }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
                             <select formControlName="paymentMethod"
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'paymentMethod')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
-                                <option value="">Choose...</option>
-                                <option value="efectivo">Pagare en efectivo / en persona a Crossworlds Center for
-                                    Connections</option>
-                                <option value="bank-transfer">Pagaré por transferencia (recibiré instrucciones)</option>
-                                <option value="beca">Solicito beca / no realizaré pago (Sólo disponible si lo aprueba
-                                    una iglesia participante.)</option>
+                                <option value="">{{ translationService.t().choose }}</option>
+                                <option value="efectivo">{{ translationService.t().paymentCash }}</option>
+                                <option value="bank-transfer">{{ translationService.t().paymentTransfer }}</option>
+                                <option value="beca">{{ translationService.t().paymentScholarship }}</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'paymentMethod')) {
                             <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData,
@@ -276,7 +273,7 @@
                         <!-- Campo de imagen del campista -->
                         <div>
                             <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                                Camper Photo <span class="text-rose-500">*</span>
+                                {{ translationService.t().camperPhoto }} <span class="text-rose-500">{{ translationService.t().required }}</span>
                             </label>
 
                             <!-- Preview de la imagen si está seleccionada -->
@@ -304,11 +301,10 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <span>{{ selectedImage() ? selectedImage()!.name : 'Click to upload photo' }}</span>
+                                    <span>{{ selectedImage() ? selectedImage()!.name : translationService.t().uploadPhoto }}</span>
                                 </button>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1 sm:mt-1.5">Maximum file size: 5MB. Supported formats:
-                                JPG, PNG, GIF</p>
+                            <p class="text-xs text-gray-500 mt-1 sm:mt-1.5">{{ translationService.t().maxFileSize }}</p>
                             <div *ngIf="formData.get('camperImage')?.invalid && formData.get('camperImage')?.touched"
                                 class="flex items-center gap-2 mt-2 text-rose-600 text-sm">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -316,7 +312,7 @@
                                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span>Please upload a photo of the camper</span>
+                                <span>{{ translationService.t().pleaseUploadPhoto }}</span>
                             </div>
                         </div>
                     </div>
@@ -335,8 +331,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-bold">Registration Summary</h2>
-                        <p class="text-emerald-50 text-xs sm:text-sm">Review your registration</p>
+                        <h2 class="text-xl sm:text-2xl font-bold">{{ translationService.t().registrationSummary }}</h2>
+                        <p class="text-emerald-50 text-xs sm:text-sm">{{ translationService.t().registrationSummaryDesc }}</p>
                     </div>
                 </div>
 
@@ -349,7 +345,7 @@
                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <span class="text-white font-semibold">¡Registro exitoso! Redirigiendo...</span>
+                        <span class="text-white font-semibold">{{ translationService.t().registrationSuccess }}</span>
                     </div>
                 </div>
 
@@ -375,7 +371,7 @@
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                         </path>
                     </svg>
-                    <span>{{ isSubmitting() ? 'Enviando...' : 'Complete Registration' }}</span>
+                    <span>{{ isSubmitting() ? translationService.t().sending : translationService.t().completeRegistration }}</span>
                     <svg *ngIf="!isSubmitting()"
                         class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -385,7 +381,7 @@
                 </button>
 
                 <p class="text-center text-xs sm:text-sm text-emerald-50 mt-3 sm:mt-4">
-                    By submitting, you agree to our Terms & Conditions
+                    {{ translationService.t().termsConditions }}
                 </p>
             </div>
         </form>

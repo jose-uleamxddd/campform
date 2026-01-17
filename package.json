@@ -28,14 +28,17 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@supabase/supabase-js": "^2.90.1",
+    "file-saver": "^2.0.5",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@angular/build": "^20.0.5",
     "@angular/cli": "^20.0.5",
     "@angular/compiler-cli": "^20.0.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.23",
     "daisyui": "^5.5.14",

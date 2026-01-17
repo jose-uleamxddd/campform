@@ -1,10 +1,10 @@
 <div class="min-h-screen bg-gradient-to-br from-green-100 via-emerald-100 to-green-200">
     <!-- Header with improved design -->
-    <app-up-bar />
+    <app-up-bar/>
 
     <div class="max-w-[95%] xl:max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-6 sm:py-8">
         <!-- Progress indicator -->
-        <app-text-rotate [words]="textRotateWords()" />
+        <app-text-rotate [words]="textRotateWords()"></app-text-rotate>
 
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <!-- Two column layout for desktop -->
@@ -146,8 +146,7 @@
                                 <option value="female">Female</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'camperGender')) {
-                            <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData,
-                                'camperGender') }}</span>
+                                <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'camperGender') }}</span>
                             }
                         </div>
 
@@ -167,8 +166,7 @@
                                 <option value="13">13 years</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'ageOfCamper')) {
-                            <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'ageOfCamper')
-                                }}</span>
+                                <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'ageOfCamper') }}</span>
                             }
                         </div>
 
@@ -224,7 +222,7 @@
                                 </span>
                                 }
                             </div>
-
+                            
                         </div>
 
                         <div>
@@ -235,21 +233,13 @@
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'busPlace')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
                                 <option value="">Choose...</option>
-                                <option value="CrossWorlds Center for Connections">CrossWrolds Center for Connections
-                                </option>
-                                <option value="Iglesia Verbo (Av 24 entre calle 17 y calle 20)">Iglesia Verbo (Av 24
-                                    entre calle 17 y calle 20)</option>
-                                <option
-                                    value="Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)">
-                                    Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)</option>
-                                <option
-                                    value="No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)">
-                                    No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)
-                                </option>
+                                <option value="CrossWorlds Center for Connections">CrossWrolds Center for Connections</option>
+                                <option value="Iglesia Verbo (Av 24 entre calle 17 y calle 20)">Iglesia Verbo (Av 24 entre calle 17 y calle 20)</option>
+                                <option value="Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)">Iglesia Manantial de Vida (Barrio San Pedro, calle 310 entre av. 204 y 205)</option>
+                                <option value="No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)">No hay transporte en bus (Esta opcion debe ser aprobada previamente por CrossWorlds)</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'busPlace')) {
-                            <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'busPlace')
-                                }}</span>
+                                <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'busPlace') }}</span>
                             }
                         </div>
 
@@ -261,15 +251,12 @@
                                 [class.border-rose-500]="formUtils.isValidField(formData, 'paymentMethod')"
                                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-gray-900 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-cyan-500 focus:ring-2 sm:focus:ring-4 focus:ring-cyan-50 transition-all bg-white appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.5em] bg-[center_right_0.5rem] bg-no-repeat">
                                 <option value="">Choose...</option>
-                                <option value="efectivo">Pagare en efectivo / en persona a Crossworlds Center for
-                                    Connections</option>
+                                <option value="efectivo">Pagare en efectivo / en persona a Crossworlds Center for Connections</option>
                                 <option value="bank-transfer">Pagaré por transferencia (recibiré instrucciones)</option>
-                                <option value="beca">Solicito beca / no realizaré pago (Sólo disponible si lo aprueba
-                                    una iglesia participante.)</option>
+                                <option value="beca">Solicito beca / no realizaré pago (Sólo disponible si lo aprueba una iglesia participante.)</option>
                             </select>
                             @if (formUtils.isValidField(formData, 'paymentMethod')) {
-                            <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData,
-                                'paymentMethod') }}</span>
+                                <span class="text-rose-500 text-xs mt-1">{{ formUtils.getFieldError(formData, 'paymentMethod') }}</span>
                             }
                         </div>
 

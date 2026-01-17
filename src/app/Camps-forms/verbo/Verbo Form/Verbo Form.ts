@@ -8,10 +8,12 @@ import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { filter } from 'rxjs/internal/operators/filter';
 import { tap } from 'rxjs/internal/operators/tap';
 import { FormUtils } from '../../../utils/form-utils';
+import { UpBar } from "../../../components/shared/up-bar/up-bar";
+import { TextRotate } from "../../../components/shared/text-rotate/text-rotate";
 
 @Component({
   selector: 'app-verbo-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, UpBar, TextRotate],
   templateUrl: './Verbo Form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,6 +26,7 @@ export class VerboForm {
   submitError = signal<string | null>(null);
   countries = signal<Country[]>([]);
   provincias = signal<State[]>([]);
+  textRotateWords = signal<string[]>(['IGLESIA', 'VERBO']);
 
 
 

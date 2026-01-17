@@ -4,11 +4,13 @@ import { VerboForm } from './Camps-forms/verbo/Verbo Form/Verbo Form';
 import { LoginComponent } from './login/login';
 import { DashboardComponent } from './admin/dashboard/dashboard';
 import { authGuard } from './guards/auth.guard';
+import { PincipalPage } from './principal page/Pincipal-page/Pincipal-page';
+import { Crossworlds } from './Camps-forms/crossworlds/crossworlds';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'principal-page',
         pathMatch: 'full'
     },
     {
@@ -28,5 +30,13 @@ export const routes: Routes = [
         path: 'manantial-form',
         component: ManantialForm
     },
+    {
+        path: "principal-page",
+        component: PincipalPage
+    },
+    {
+        path: 'crossworlds-form',
+        component: Crossworlds
+    }
     
 ];

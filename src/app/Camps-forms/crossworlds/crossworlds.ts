@@ -1,24 +1,23 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SupabaseService } from '../../../services/supabase.service';
-import { Country, State } from '../../../interfaces/country.interface';
-import { CountrySelectBar } from '../../../services/CountrySelectBar.service';
+import { SupabaseService } from '../../services/supabase.service';
+import { Country, State } from '../../interfaces/country.interface';
+import { CountrySelectBar } from '../../services/CountrySelectBar.service';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { filter } from 'rxjs/internal/operators/filter';
 import { tap } from 'rxjs/internal/operators/tap';
-import { FormUtils } from '../../../utils/form-utils';
-import { RouterLink } from "@angular/router";
-import { UpBar } from "../../../components/shared/up-bar/up-bar";
-import { TextRotate } from '../../../components/shared/text-rotate/text-rotate';
+import { FormUtils } from '../../utils/form-utils';
+import { UpBar } from '../../components/shared/up-bar/up-bar';
+import { TextRotate } from "../../components/shared/text-rotate/text-rotate";
 
 @Component({
-  selector: 'app-manantial-form',
+  selector: 'app-crossworlds',
   imports: [CommonModule, ReactiveFormsModule, UpBar, TextRotate],
-  templateUrl: './manantial-form.html',
+  templateUrl: './crossworlds.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManantialForm implements OnInit {
+export class Crossworlds {
   formData!: FormGroup;
   selectedImage = signal<File | null>(null);
   imagePreview = signal<string | null>(null);
@@ -27,18 +26,19 @@ export class ManantialForm implements OnInit {
   submitError = signal<string | null>(null);
   countries = signal<Country[]>([]);
   provincias = signal<State[]>([]);
-  textRotateWords = signal<string[]>(['IGLESIA', 'MANANTIAL DE VIDA']);
+  textRotateWords = signal<string[]>(['CROSSWORLD', 'CONNECTIONS']);
 
 
-  fb= inject(FormBuilder);
+
+  fb = inject(FormBuilder);
   supabaseService = inject(SupabaseService);
   countrySelectBar = inject(CountrySelectBar);
   formUtils = FormUtils;
-  
+
 
   ngOnInit(): void {
     this.formData = this.fb.group({
-      email: ['', [Validators.required, Validators.email ,Validators.pattern(FormUtils.emailPattern)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(FormUtils.emailPattern)]],
       firstName: ['', [Validators.required, Validators.pattern(FormUtils.namePattern)]],
       lastName: ['', [Validators.required, Validators.pattern(FormUtils.namePattern)]],
       country: ['EC', Validators.required],
@@ -72,26 +72,26 @@ export class ManantialForm implements OnInit {
     }
   }
 
-  onFormChanged= effect((onCleanup) => {
+  onFormChanged = effect((onCleanup) => {
     const countrySubscription = this.onCountryChanged();
-    onCleanup(() =>{
-     countrySubscription.unsubscribe();
+    onCleanup(() => {
+      countrySubscription.unsubscribe();
     });
   });
 
   onCountryChanged() {
     return this.formData.get('country')!.valueChanges
-    .pipe(
-      tap(() => this.formData.get('state')!.setValue('')),
-      filter( value =>value!.length >0),  
-      switchMap(alphaCode => this.countrySelectBar.getStatesByCountry(alphaCode ?? ''),
-      ) 
-    )
-    .subscribe( (provincias) => {
-       console.log({ provincias });
-       this.provincias.set(provincias);
+      .pipe(
+        tap(() => this.formData.get('state')!.setValue('')),
+        filter(value => value!.length > 0),
+        switchMap(alphaCode => this.countrySelectBar.getStatesByCountry(alphaCode ?? ''),
+        )
+      )
+      .subscribe((provincias) => {
+        console.log({ provincias });
+        this.provincias.set(provincias);
 
-    });
+      });
   }
 
 
@@ -107,7 +107,7 @@ export class ManantialForm implements OnInit {
     });
   }
 
-  
+
   /**
    * Maneja la selección de imagen
    */
@@ -115,7 +115,7 @@ export class ManantialForm implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      
+
       // Validar que sea una imagen
       if (!file.type.startsWith('image/')) {
         this.submitError.set('Por favor selecciona un archivo de imagen válido');
@@ -137,7 +137,7 @@ export class ManantialForm implements OnInit {
         this.imagePreview.set(e.target?.result as string);
       };
       reader.readAsDataURL(file);
-      
+
       this.submitError.set(null);
     }
   }
@@ -170,7 +170,7 @@ export class ManantialForm implements OnInit {
       // 1. Subir la imagen si existe
       if (this.selectedImage()) {
         const camperFullName = `${formValues.firstName}_${formValues.lastName}`;
-        imageUrl = await this.supabaseService.uploadCamperImage(
+        imageUrl = await this.supabaseService.uploadCrossworldsConnectionsImage(
           this.selectedImage()!,
           camperFullName
         );
@@ -195,12 +195,12 @@ export class ManantialForm implements OnInit {
         imagen_url: imageUrl
       };
 
-      // 3. Guardar en Supabase
-      const result = await this.supabaseService.createRegistration(registrationData);
+      // 3. Guardar en Supabase (tabla crossworlds_connections)
+      const result = await this.supabaseService.createCrossworldsConnectionsRegistration(registrationData);
       console.log('Registro creado exitosamente:', result);
 
       this.submitSuccess.set(true);
-      
+
       // Resetear formulario después de 2 segundos
       setTimeout(() => {
         this.formData.reset({
@@ -222,4 +222,5 @@ export class ManantialForm implements OnInit {
       this.isSubmitting.set(false);
     }
   }
+
 }

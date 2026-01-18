@@ -13,6 +13,20 @@ export class SupabaseService {
   }
 
   /**
+   * Normaliza un texto removiendo acentos y caracteres especiales
+   * @param text - Texto a normalizar
+   * @returns Texto sin acentos ni caracteres especiales
+   */
+  private normalizeText(text: string): string {
+    return text
+      .normalize('NFD') // Descompone caracteres acentuados
+      .replace(/[\u0300-\u036f]/g, '') // Remueve los acentos
+      .replace(/[^a-zA-Z0-9_\-]/g, '_') // Reemplaza caracteres especiales con _
+      .replace(/_+/g, '_') // Evita múltiples guiones bajos seguidos
+      .replace(/^_|_$/g, ''); // Remueve guiones bajos al inicio/final
+  }
+
+  /**
    * Sube una imagen al storage de Supabase
    * @param file - Archivo de imagen a subir
    * @param camperName - Nombre del campista para nombrar el archivo
@@ -20,9 +34,10 @@ export class SupabaseService {
    */
   async uploadCamperImage(file: File, camperName: string): Promise<string> {
     try {
-      // Generar nombre único para el archivo
+      // Generar nombre único para el archivo (normalizado sin acentos)
       const fileExt = file.name.split('.').pop();
-      const fileName = `${camperName.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
+      const normalizedName = this.normalizeText(camperName.replace(/\s+/g, '_'));
+      const fileName = `${normalizedName}_${Date.now()}.${fileExt}`;
       const filePath = `manantial/${fileName}`;
 
       console.log('Intentando subir archivo:', { fileName, filePath, bucketName: 'campPictures' });
@@ -88,7 +103,8 @@ export class SupabaseService {
   async uploadVerboCamperImage(file: File, camperName: string): Promise<string> {
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${camperName.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
+      const normalizedName = this.normalizeText(camperName.replace(/\s+/g, '_'));
+      const fileName = `${normalizedName}_${Date.now()}.${fileExt}`;
       const filePath = `verbo/${fileName}`;
 
       console.log('Intentando subir archivo Verbo:', { fileName, filePath, bucketName: 'campPictures' });

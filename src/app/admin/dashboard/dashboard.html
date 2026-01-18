@@ -208,6 +208,7 @@
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Parent/Guardian</th>
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Date</th>
                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Pickup Location</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Método de Pago</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/10">
@@ -238,6 +239,7 @@
                     <td class="px-6 py-4 text-gray-300">{{ reg.parent_name }}</td>
                     <td class="px-6 py-4 text-gray-400 text-sm">{{ formatDate(reg.created_at) }}</td>
                     <td class="px-6 py-4 text-gray-300 text-sm max-w-xs truncate" [title]="reg.bus_place">{{ reg.bus_place || '-' }}</td>
+                    <td class="px-6 py-4 text-gray-300">{{ reg.payment_method || '-' }}</td>
                   </tr>
                 } @empty {
                   <tr>
@@ -279,6 +281,7 @@
                     <td class="px-6 py-4 text-gray-300">{{ reg.parent_name }}</td>
                     <td class="px-6 py-4 text-gray-400 text-sm">{{ formatDate(reg.created_at) }}</td>
                     <td class="px-6 py-4 text-gray-300 text-sm max-w-xs truncate" [title]="reg.bus_place">{{ reg.bus_place || '-' }}</td>
+                    <td class="px-6 py-4 text-gray-300">{{ reg.payment_method || '-' }}</td>
                   </tr>
                 } @empty {
                   <tr>
@@ -320,6 +323,7 @@
                     <td class="px-6 py-4 text-gray-300">{{ reg.parent_name }}</td>
                     <td class="px-6 py-4 text-gray-400 text-sm">{{ formatDate(reg.created_at) }}</td>
                     <td class="px-6 py-4 text-gray-300 text-sm max-w-xs truncate" [title]="reg.bus_place">{{ reg.bus_place || '-' }}</td>
+                    <td class="px-6 py-4 text-gray-300">{{ reg.payment_method || '-' }}</td>
                   </tr>
                 } @empty {
                   <tr>

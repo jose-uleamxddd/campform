@@ -3,6 +3,18 @@
 
 /* Estilos globales para mejorar responsividad en móviles */
 @layer base {
+  /* Reset y mejoras base */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   /* Asegurar que los inputs sean siempre legibles en móvil */
   input, select, textarea {
     @apply text-base;
@@ -13,7 +25,24 @@
   @media (max-width: 640px) {
     body {
       -webkit-tap-highlight-color: transparent;
+      font-size: 14px;
     }
+
+    h1, h2, h3, h4, h5, h6 {
+      word-break: break-word;
+    }
+  }
+
+  /* Asegurar imágenes responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Prevenir horizontal scroll */
+  body, html {
+    max-width: 100%;
   }
 }
 

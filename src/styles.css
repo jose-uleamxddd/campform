@@ -4,45 +4,73 @@
 /* Estilos globales para mejorar responsividad en móviles */
 @layer base {
   /* Reset y mejoras base */
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
   }
   
   html, body {
-    margin: 0;
-    padding: 0;
     width: 100%;
+    max-width: 100vw;
     overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Asegurar que los inputs sean siempre legibles en móvil */
-  input, select, textarea {
-    @apply text-base;
+  input, select, textarea, button {
     font-size: 16px !important; /* Previene zoom en iOS */
+    max-width: 100%;
   }
   
   /* Mejor espaciado en móviles */
   @media (max-width: 640px) {
     body {
       -webkit-tap-highlight-color: transparent;
-      font-size: 14px;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5, h6, p, span, label {
       word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    /* Forzar columna única en móvil */
+    .grid {
+      grid-template-columns: 1fr !important;
+    }
+    
+    /* Reducir padding en móvil */
+    .p-3, .p-4, .p-5, .p-6, .p-7 {
+      padding: 0.75rem !important;
+    }
+    
+    .px-3, .px-4, .px-5, .px-6, .px-12 {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
     }
   }
 
   /* Asegurar imágenes responsive */
-  img {
+  img, video, canvas, svg {
     max-width: 100%;
     height: auto;
     display: block;
   }
 
-  /* Prevenir horizontal scroll */
-  body, html {
-    max-width: 100%;
+  /* Prevenir horizontal scroll en todos los elementos */
+  * {
+    max-width: 100vw;
   }
 }
 
@@ -64,5 +92,10 @@
     @apply bg-white rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg 
            border border-gray-100 p-4 sm:p-6 lg:p-7 mb-4 sm:mb-6 
            hover:shadow-xl transition-shadow;
+  }
+  
+  /* Contenedor principal responsive */
+  .responsive-container {
+    @apply w-full max-w-full mx-auto px-2 sm:px-4 md:px-6 lg:px-12;
   }
 }

@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
     this.errorMessage.set(null);
 
     try {
-      // Cargar todas las listas en paralelo
+      // Load all lists in parallel
       const [manantialData, verboData, crossworldsData] = await Promise.all([
         this.supabaseService.getRegistrations(),
         this.supabaseService.getVerboRegistrations(),
@@ -116,8 +116,8 @@ export class DashboardComponent implements OnInit {
       this.crossworldsRegistrations.set(crossworldsData || []);
 
     } catch (error: any) {
-      console.error('Error al cargar registros:', error);
-      this.errorMessage.set('Error al cargar los registros. Intenta de nuevo.');
+      console.error('Error loading registrations:', error);
+      this.errorMessage.set('Error loading registrations. Please try again.');
     } finally {
       this.isLoading.set(false);
     }
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit {
   formatDate(dateString: string): string {
     if (!dateString) return '-';
     const date = new Date(dateString);
-    return date.toLocaleDateString('es-EC', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -155,48 +155,48 @@ export class DashboardComponent implements OnInit {
 
   getGenderLabel(gender: string): string {
     const labels: Record<string, string> = {
-      'male': 'Masculino',
-      'female': 'Femenino',
-      'M': 'Masculino',
-      'F': 'Femenino'
+      'male': 'Male',
+      'female': 'Female',
+      'M': 'Male',
+      'F': 'Female'
     };
     return labels[gender] || gender;
   }
 
-  // Signal para estado de exportación
+  // Signal for export state
   isExporting = signal(false);
 
   /**
-   * Exporta todos los registros a un archivo Excel con hojas separadas
+   * Exports all registrations to an Excel file with separate sheets
    */
   exportToExcel(): void {
     this.isExporting.set(true);
 
     try {
-      // Crear un nuevo workbook
+      // Create a new workbook
       const workbook = XLSX.utils.book_new();
 
-      // Headers en español para el Excel
+      // Headers in English for Excel
       const headers = [
         'ID',
         'Email',
-        'Nombre',
-        'Apellido',
-        'País',
-        'Estado/Provincia',
-        'Es Corporativo',
-        'Género',
-        'Edad del Campista',
-        'Talla Camiseta',
-        'Nombre del Padre/Madre',
+        'First Name',
+        'Last Name',
+        'Country',
+        'State/Province',
+        'Is Corporate',
+        'Gender',
+        'Camper Age',
+        'T-Shirt Size',
+        'Parent/Guardian Name',
         'WhatsApp',
-        'Lugar de Recogida',
-        'Método de Pago',
-        'URL Imagen',
-        'Fecha de Registro'
+        'Pickup Location',
+        'Payment Method',
+        'Image URL',
+        'Registration Date'
       ];
 
-      // Función para transformar los datos
+      // Function to transform data
       const transformData = (registrations: Registration[]) => {
         return registrations.map(reg => ([
           reg.id,
@@ -205,7 +205,7 @@ export class DashboardComponent implements OnInit {
           reg.last_name,
           reg.country,
           reg.state,
-          reg.is_corporate ? 'Sí' : 'No',
+          reg.is_corporate ? 'Yes' : 'No',
           this.getGenderLabel(reg.camper_gender),
           reg.age_of_camper,
           reg.tshirt_size,
@@ -218,63 +218,63 @@ export class DashboardComponent implements OnInit {
         ]));
       };
 
-      // Hoja de Manantial
+      // Fountain of Life sheet
       const manantialData = [headers, ...transformData(this.manantialRegistrations())];
       const manantialSheet = XLSX.utils.aoa_to_sheet(manantialData);
       this.setColumnWidths(manantialSheet);
-      XLSX.utils.book_append_sheet(workbook, manantialSheet, 'Manantial');
+      XLSX.utils.book_append_sheet(workbook, manantialSheet, 'Fountain of Life');
 
-      // Hoja de Verbo
+      // Word sheet
       const verboData = [headers, ...transformData(this.verboRegistrations())];
       const verboSheet = XLSX.utils.aoa_to_sheet(verboData);
       this.setColumnWidths(verboSheet);
-      XLSX.utils.book_append_sheet(workbook, verboSheet, 'Verbo');
+      XLSX.utils.book_append_sheet(workbook, verboSheet, 'Word');
 
-      // Hoja de Crossworlds Connections
+      // Crossworlds Connections sheet
       const crossworldsData = [headers, ...transformData(this.crossworldsRegistrations())];
       const crossworldsSheet = XLSX.utils.aoa_to_sheet(crossworldsData);
       this.setColumnWidths(crossworldsSheet);
       XLSX.utils.book_append_sheet(workbook, crossworldsSheet, 'Crossworlds Connections');
 
-      // Generar el archivo Excel
+      // Generate Excel file
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
       const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       
-      // Nombre del archivo con fecha actual
+      // File name with current date
       const today = new Date();
-      const fileName = `CrossWorlds_Registros_${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}.xlsx`;
+      const fileName = `CrossWorlds_Registrations_${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}.xlsx`;
       
       saveAs(blob, fileName);
 
     } catch (error) {
-      console.error('Error al exportar a Excel:', error);
-      this.errorMessage.set('Error al exportar los registros. Intenta de nuevo.');
+      console.error('Error exporting to Excel:', error);
+      this.errorMessage.set('Error exporting registrations. Please try again.');
     } finally {
       this.isExporting.set(false);
     }
   }
 
   /**
-   * Establece el ancho de las columnas para mejor visualización
+   * Sets column widths for better visualization
    */
   private setColumnWidths(sheet: XLSX.WorkSheet): void {
     sheet['!cols'] = [
       { wch: 10 },  // ID
       { wch: 30 },  // Email
-      { wch: 15 },  // Nombre
-      { wch: 15 },  // Apellido
-      { wch: 10 },  // País
-      { wch: 20 },  // Estado
-      { wch: 12 },  // Es Corporativo
-      { wch: 12 },  // Género
-      { wch: 15 },  // Edad
-      { wch: 12 },  // Talla
-      { wch: 25 },  // Padre/Madre
+      { wch: 15 },  // First Name
+      { wch: 15 },  // Last Name
+      { wch: 10 },  // Country
+      { wch: 20 },  // State
+      { wch: 12 },  // Is Corporate
+      { wch: 12 },  // Gender
+      { wch: 15 },  // Age
+      { wch: 12 },  // Size
+      { wch: 25 },  // Parent/Guardian
       { wch: 18 },  // WhatsApp
-      { wch: 25 },  // Lugar Recogida
-      { wch: 15 },  // Método Pago
-      { wch: 50 },  // URL Imagen
-      { wch: 20 },  // Fecha
+      { wch: 25 },  // Pickup Location
+      { wch: 15 },  // Payment Method
+      { wch: 50 },  // Image URL
+      { wch: 20 },  // Date
     ];
   }
 }

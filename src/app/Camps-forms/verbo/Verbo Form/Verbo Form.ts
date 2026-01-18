@@ -37,6 +37,10 @@ export class VerboForm {
   translationService = inject(TranslationService);
   formUtils = FormUtils;
   
+  get t() {
+    return this.translationService.t();
+  }
+  
 
   ngOnInit(): void {
     this.formData = this.fb.group({

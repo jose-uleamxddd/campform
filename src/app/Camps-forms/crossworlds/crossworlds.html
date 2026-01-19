@@ -99,20 +99,7 @@
                             </div>
                         </div>
 
-                        <div
-                            class="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200">
-                            <input type="checkbox" formControlName="isCorporate"
-                                class="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 border-2 border-gray-300 rounded text-emerald-600 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0" />
-                            @if (formUtils.isValidField(formData, 'isCorporate'))
-                            {
-                            <span class="form-text text-gray-600">
-                                {{ formUtils.getFieldError(formData, 'isCorporate') }}
-                            </span>
-                            }
-                            <label class="text-xs sm:text-sm font-medium text-gray-700 leading-relaxed">
-                                {{ translationService.t().corporatePurchase }}
-                            </label>
-                        </div>
+                        
                     </div>
                 </div>
 

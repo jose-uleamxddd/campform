@@ -17,9 +17,15 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent
     },
+
     {
         path: 'admin',
         component: DashboardComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin/edit/:type/:id',
+        loadComponent: () => import('./admin/edit-registration/edit-registration').then(m => m.EditRegistrationComponent),
         canActivate: [authGuard]
     },
     {
@@ -42,5 +48,5 @@ export const routes: Routes = [
         path: '**',
         redirectTo: 'principal-page'
     }
-    
+
 ];

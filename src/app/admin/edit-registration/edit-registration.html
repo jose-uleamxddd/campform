@@ -1,0 +1,225 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Edit Registration
+            </h1>
+            <button (click)="goBack()" class="flex items-center text-gray-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Dashboard
+            </button>
+        </div>
+
+        <!-- Loading State -->
+        @if (isLoading()) {
+        <div class="flex flex-col items-center justify-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mb-4"></div>
+            <p class="text-gray-400">Loading details...</p>
+        </div>
+        }
+
+        <!-- Error State -->
+        @if (errorMessage()) {
+        <div class="bg-red-500/20 border border-red-500/50 text-red-300 p-4 rounded-xl mb-6 flex items-center">
+            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {{ errorMessage() }}
+        </div>
+        }
+
+        <!-- Success State -->
+        @if (successMessage()) {
+        <div class="bg-green-500/20 border border-green-500/50 text-green-300 p-4 rounded-xl mb-6 flex items-center">
+            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            {{ successMessage() }}
+        </div>
+        }
+
+        <!-- Form -->
+        @if (!isLoading() && formData) {
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/10 shadow-xl">
+            <form (ngSubmit)="onSave()" class="space-y-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- First Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">First Name</label>
+                        <input type="text" [(ngModel)]="formData.first_name" name="first_name"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                            required>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Last Name</label>
+                        <input type="text" [(ngModel)]="formData.last_name" name="last_name"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                            required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                        <input type="email" [(ngModel)]="formData.email" name="email"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                            required>
+                    </div>
+
+                    <!-- Country -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Country</label>
+                        <input type="text" [(ngModel)]="formData.country" name="country"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- State -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">State/Province</label>
+                        <input type="text" [(ngModel)]="formData.state" name="state"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">WhatsApp Number</label>
+                        <input type="text" [(ngModel)]="formData.whatsapp_number" name="whatsapp_number"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- Age -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Age</label>
+                        <input type="text" [(ngModel)]="formData.age_of_camper" name="age_of_camper"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- Gender -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Gender</label>
+                        <select [(ngModel)]="formData.camper_gender" name="camper_gender"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all [&>option]:bg-slate-800">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <!-- T-Shirt Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">T-Shirt Size</label>
+                        <input type="text" [(ngModel)]="formData.tshirt_size" name="tshirt_size"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- Parent Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Parent/Guardian Name</label>
+                        <input type="text" [(ngModel)]="formData.parent_name" name="parent_name"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- Bus Place / Pickup -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Pickup Location</label>
+                        <select [(ngModel)]="formData.bus_place" name="bus_place"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer [&>option]:bg-slate-800">
+                            <option value="" disabled selected>Select a location</option>
+                            @for (option of pickupOptions(); track option) {
+                            <option [value]="option">{{ option }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Payment Method</label>
+                        <select [(ngModel)]="formData.payment_method" name="payment_method"
+                            class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer [&>option]:bg-slate-800">
+                            <option value="" disabled selected>Select a payment method</option>
+                            @for (option of paymentOptions(); track option) {
+                            <option [value]="option">{{ option }}</option>
+                            }
+                        </select>
+                    </div>
+
+
+                    <!-- Image Upload -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Profile Image</label>
+
+                        <div class="flex items-start space-x-6">
+                            <!-- Image Preview -->
+                            <div class="relative group">
+                                @if(imagePreview) {
+                                <div class="w-32 h-32 rounded-xl overflow-hidden border-2 border-white/20 relative">
+                                    <img [src]="imagePreview" alt="Preview" class="w-full h-full object-cover">
+                                </div>
+                                } @else {
+                                <div
+                                    class="w-32 h-32 rounded-xl bg-white/5 border-2 border-dashed border-white/20 flex items-center justify-center">
+                                    <span class="text-gray-500 text-sm">No Image</span>
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Upload Control -->
+                            <div class="flex-1">
+                                <label class="block w-full cursor-pointer">
+                                    <input type="file" (change)="onFileSelected($event)" accept="image/*"
+                                        class="hidden">
+                                    <div
+                                        class="flex items-center justify-center w-full px-6 py-4 border-2 border-dashed border-white/20 hover:border-purple-500/50 rounded-xl bg-white/5 hover:bg-white/10 transition-all group">
+                                        <div class="text-center">
+                                            <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-purple-400 transition-colors"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                            <p
+                                                class="mt-2 text-sm text-gray-400 group-hover:text-white transition-colors">
+                                                Click to upload new image</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <p class="mt-2 text-xs text-gray-500">Supported formats: JPG, PNG, WEBP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex items-center justify-end space-x-4 pt-8 border-t border-white/10 mt-8">
+                    <button type="button" (click)="goBack()"
+                        class="px-8 py-3 bg-red-400 rounded-xl border border-white/10 hover:bg-white/5 text-gray-300 text-lg font-medium transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" [disabled]="isSaving()"
+                        class="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg font-bold shadow-lg shadow-purple-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center transform hover:scale-[1.02] active:scale-[0.98]">
+                        @if (isSaving()) {
+                        <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        Saving...
+                        } @else {
+                        Save Changes
+                        }
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        }
+    </div>
+</div>

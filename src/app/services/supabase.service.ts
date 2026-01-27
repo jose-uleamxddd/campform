@@ -210,7 +210,7 @@ export class SupabaseService {
       // Extraer el path del archivo de la URL
       const urlParts = imageUrl.split('/campPictures/');
       if (urlParts.length < 2) return;
-      
+
       const filePath = decodeURIComponent(urlParts[1]);
 
       const { error } = await this.supabase.storage
@@ -237,7 +237,8 @@ export class SupabaseService {
   async uploadCrossworldsConnectionsImage(file: File, camperName: string): Promise<string> {
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${camperName.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
+      const normalizedName = this.normalizeText(camperName.replace(/\s+/g, '_'));
+      const fileName = `${normalizedName}_${Date.now()}.${fileExt}`;
       const filePath = `crossworlds_connections/${fileName}`;
 
       console.log('Intentando subir archivo Crossworlds Connections:', { fileName, filePath, bucketName: 'campPictures' });
@@ -315,10 +316,11 @@ export class SupabaseService {
 
   /**
    * Actualiza un registro de Crossworlds Connections
+
    * @param id - ID del registro a actualizar
    * @param registrationData - Datos actualizados
    */
-  async updateCrossworldsConnectionsRegistration(id: number, registrationData: any) {
+  async updateCrossworldsConnectionsRegistration(id: string, registrationData: any) {
     try {
       const { data, error } = await this.supabase
         .from('crossworlds_connections')
@@ -338,11 +340,13 @@ export class SupabaseService {
     }
   }
 
+
+
   /**
    * Elimina un registro de Crossworlds Connections
    * @param id - ID del registro a eliminar
    */
-  async deleteCrossworldsConnectionsRegistration(id: number) {
+  async deleteCrossworldsConnectionsRegistration(id: string) {
     try {
       const { error } = await this.supabase
         .from('crossworlds_connections')
@@ -354,6 +358,169 @@ export class SupabaseService {
       }
     } catch (error) {
       console.error('Error deleting Crossworlds Connections registration:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene un registro de Crossworlds Connections por ID
+   * @param id - ID del registro
+   */
+  async getCrossworldsConnectionsRegistrationById(id: string) {
+    try {
+      const { data, error } = await this.supabase
+        .from('crossworlds_connections')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching Crossworlds Connections registration:', error);
+      throw error;
+    }
+  }
+
+  // ==================== MANANTIAL CRUD EXTENSIONS ====================
+
+  /**
+   * Obtiene un registro de Manantial por ID
+   * @param id - ID del registro
+   */
+  async getRegistrationById(id: string) {
+    try {
+      const { data, error } = await this.supabase
+        .from('manantial_registrations')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching Manantial registration:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro de Manantial
+   * @param id - ID del registro
+   * @param registrationData - Datos actualizados
+   */
+  async updateRegistration(id: string, registrationData: any) {
+    try {
+      const { data, error } = await this.supabase
+        .from('manantial_registrations')
+        .update(registrationData)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error updating Manantial registration:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro de Manantial
+   * @param id - ID del registro
+   */
+  async deleteRegistration(id: string) {
+    try {
+      const { error } = await this.supabase
+        .from('manantial_registrations')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error deleting Manantial registration:', error);
+      throw error;
+    }
+  }
+
+  // ==================== VERBO CRUD EXTENSIONS ====================
+
+  /**
+   * Obtiene un registro de Verbo por ID
+   * @param id - ID del registro
+   */
+  async getVerboRegistrationById(id: string) {
+    try {
+      const { data, error } = await this.supabase
+        .from('verbo_registrations')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching Verbo registration:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro de Verbo
+   * @param id - ID del registro
+   * @param registrationData - Datos actualizados
+   */
+  async updateVerboRegistration(id: string, registrationData: any) {
+    try {
+      const { data, error } = await this.supabase
+        .from('verbo_registrations')
+        .update(registrationData)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error updating Verbo registration:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro de Verbo
+   * @param id - ID del registro
+   */
+  async deleteVerboRegistration(id: string) {
+    try {
+      const { error } = await this.supabase
+        .from('verbo_registrations')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error deleting Verbo registration:', error);
       throw error;
     }
   }

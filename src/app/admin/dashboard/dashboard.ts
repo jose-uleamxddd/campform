@@ -1,14 +1,15 @@
+
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service';
 import { AuthService } from '../../services/auth.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 interface Registration {
-  id: string;
+  id: string; // Changed to string to match Supabase UUIDs
   email: string;
   first_name: string;
   last_name: string;
@@ -30,7 +31,7 @@ interface Registration {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -53,10 +54,10 @@ export class DashboardComponent implements OnInit {
   filteredManantialRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const registrations = this.manantialRegistrations();
-    
+
     if (!term) return registrations;
-    
-    return registrations.filter(r => 
+
+    return registrations.filter(r =>
       r.first_name.toLowerCase().includes(term) ||
       r.last_name.toLowerCase().includes(term) ||
       `${r.first_name} ${r.last_name}`.toLowerCase().includes(term)
@@ -66,10 +67,10 @@ export class DashboardComponent implements OnInit {
   filteredVerboRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const registrations = this.verboRegistrations();
-    
+
     if (!term) return registrations;
-    
-    return registrations.filter(r => 
+
+    return registrations.filter(r =>
       r.first_name.toLowerCase().includes(term) ||
       r.last_name.toLowerCase().includes(term) ||
       `${r.first_name} ${r.last_name}`.toLowerCase().includes(term)
@@ -79,10 +80,10 @@ export class DashboardComponent implements OnInit {
   filteredCrossworldsRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const registrations = this.crossworldsRegistrations();
-    
+
     if (!term) return registrations;
-    
-    return registrations.filter(r => 
+
+    return registrations.filter(r =>
       r.first_name.toLowerCase().includes(term) ||
       r.last_name.toLowerCase().includes(term) ||
       `${r.first_name} ${r.last_name}`.toLowerCase().includes(term)
@@ -163,6 +164,35 @@ export class DashboardComponent implements OnInit {
     return labels[gender] || gender;
   }
 
+  async deleteRegistration(id: string, type: 'manantial' | 'verbo' | 'crossworlds') {
+    if (!confirm('Are you sure you want to delete this registration? This action cannot be undone.')) {
+      return;
+    }
+
+    this.isLoading.set(true);
+    try {
+      switch (type) {
+        case 'manantial':
+          await this.supabaseService.deleteRegistration(id);
+          this.manantialRegistrations.update(regs => regs.filter(r => r.id !== id));
+          break;
+        case 'verbo':
+          await this.supabaseService.deleteVerboRegistration(id);
+          this.verboRegistrations.update(regs => regs.filter(r => r.id !== id));
+          break;
+        case 'crossworlds':
+          await this.supabaseService.deleteCrossworldsConnectionsRegistration(id);
+          this.crossworldsRegistrations.update(regs => regs.filter(r => r.id !== id));
+          break;
+      }
+    } catch (error) {
+      console.error('Error deleting registration:', error);
+      alert('Failed to delete registration. Please try again.');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   // Signal for export state
   isExporting = signal(false);
 
@@ -239,11 +269,11 @@ export class DashboardComponent implements OnInit {
       // Generate Excel file
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
       const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      
+
       // File name with current date
       const today = new Date();
       const fileName = `CrossWorlds_Registrations_${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}.xlsx`;
-      
+
       saveAs(blob, fileName);
 
     } catch (error) {

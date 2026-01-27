@@ -1,0 +1,31 @@
+[33m❯[39m Building...
+/*! 🌼 daisyUI 5.5.14 */
+[32m✔[39m Building...
+Application bundle generation failed. [3.733 seconds] - 2026-01-27T17:37:31.124Z
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mAll "@import" rules must come first[0m [invalid-@import]
+
+    src/styles.css:2770:0:
+[37m      2770 │ [32m@import[37m url('https://fonts.googleapis.com/css2?family=Outfit:wgh...
+           ╵ [32m~~~~~~~[0m
+
+  This rule cannot come before an "@import" rule
+
+    src/styles.css:4:0:
+[37m      4 │ [32m[37m@layer theme {
+        ╵ [32m^[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Unexpected closing tag "div". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/principal page/Principal-page/Principal-page.html:171:0:
+[37m      171 │ [32m</div>[37m
+          ╵ [32m~~~~~~[0m
+
+  Error occurs in the template of component PrincipalPage.
+
+    src/app/principal page/Principal-page/Principal-page.ts:7:15:
+[37m      7 │   templateUrl: [32m'./Principal-page.html'[37m,
+        ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m

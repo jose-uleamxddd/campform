@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-pincipal-page',
+  selector: 'app-principal-page',
   imports: [],
-  templateUrl: './Pincipal-page.html',
+  templateUrl: './Principal-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PincipalPage {
+export class PrincipalPage {
   private router = inject(Router);
 
   navigateToManantial(): void {

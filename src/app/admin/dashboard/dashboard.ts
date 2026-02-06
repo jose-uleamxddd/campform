@@ -43,7 +43,24 @@ export class DashboardComponent implements OnInit {
   isLoading = signal(true);
   errorMessage = signal<string | null>(null);
   searchTerm = signal('');
+  tshirtSizeFilter = signal<string>('');
   activeTab = signal<'manantial' | 'verbo' | 'crossworlds'>('manantial');
+
+  // Computed - Available t-shirt sizes across all registrations
+  availableTshirtSizes = computed(() => {
+    const allRegs = [
+      ...this.manantialRegistrations(),
+      ...this.verboRegistrations(),
+      ...this.crossworldsRegistrations()
+    ];
+    const sizes = new Set(allRegs.map(r => r.tshirt_size).filter(Boolean));
+    const sizeOrder = ['YXS', 'YS', 'YM', 'YL', 'YXL', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+    return [...sizes].sort((a, b) => {
+      const iA = sizeOrder.indexOf(a.toUpperCase());
+      const iB = sizeOrder.indexOf(b.toUpperCase());
+      return (iA === -1 ? 99 : iA) - (iB === -1 ? 99 : iB);
+    });
+  });
 
   // Services
   private supabaseService = inject(SupabaseService);
@@ -53,7 +70,12 @@ export class DashboardComponent implements OnInit {
   // Computed - Filtrar registros por búsqueda
   filteredManantialRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
-    const registrations = this.manantialRegistrations();
+    const sizeFilter = this.tshirtSizeFilter();
+    let registrations = this.manantialRegistrations();
+
+    if (sizeFilter) {
+      registrations = registrations.filter(r => r.tshirt_size === sizeFilter);
+    }
 
     if (!term) return registrations;
 
@@ -66,7 +88,12 @@ export class DashboardComponent implements OnInit {
 
   filteredVerboRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
-    const registrations = this.verboRegistrations();
+    const sizeFilter = this.tshirtSizeFilter();
+    let registrations = this.verboRegistrations();
+
+    if (sizeFilter) {
+      registrations = registrations.filter(r => r.tshirt_size === sizeFilter);
+    }
 
     if (!term) return registrations;
 
@@ -79,7 +106,12 @@ export class DashboardComponent implements OnInit {
 
   filteredCrossworldsRegistrations = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
-    const registrations = this.crossworldsRegistrations();
+    const sizeFilter = this.tshirtSizeFilter();
+    let registrations = this.crossworldsRegistrations();
+
+    if (sizeFilter) {
+      registrations = registrations.filter(r => r.tshirt_size === sizeFilter);
+    }
 
     if (!term) return registrations;
 
@@ -135,6 +167,15 @@ export class DashboardComponent implements OnInit {
 
   clearSearch(): void {
     this.searchTerm.set('');
+  }
+
+  onTshirtSizeFilterChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.tshirtSizeFilter.set(select.value);
+  }
+
+  clearTshirtSizeFilter(): void {
+    this.tshirtSizeFilter.set('');
   }
 
   logout(): void {

@@ -59,3 +59,39 @@
   animation: float 6s ease-in-out infinite;
   will-change: transform;
 }
+
+/* ===== Print Styles for Certificates ===== */
+@media print {
+  /* Hide everything except certificates */
+  body > app-root > * {
+    display: none !important;
+  }
+
+  .certificates-print-area {
+    display: block !important;
+  }
+
+  /* Ensure certificate container fills the page */
+  .certificate-container {
+    page-break-after: always;
+    margin: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+  }
+
+  /* Hide the control bar when printing */
+  [class*="print:hidden"] {
+    display: none !important;
+  }
+
+  /* Make the modal take the full page */
+  .fixed.inset-0 {
+    position: static !important;
+    background: white !important;
+  }
+
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+}

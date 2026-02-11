@@ -28,8 +28,10 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@supabase/supabase-js": "^2.90.1",
+    "@types/jszip": "^3.4.0",
     "file-saver": "^2.0.5",
     "gsap": "^3.14.2",
+    "jszip": "^3.10.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5"

@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service';
 import { AuthService } from '../../services/auth.service';
+import { CertificateComponent, CertificateData } from '../certificate/certificate';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
 interface Registration {
   id: string; // Changed to string to match Supabase UUIDs
@@ -31,7 +33,7 @@ interface Registration {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, CertificateComponent],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -236,6 +238,149 @@ export class DashboardComponent implements OnInit {
 
   // Signal for export state
   isExporting = signal(false);
+  isDownloadingPhotos = signal(false);
+  downloadingPhotosTab = signal<string | null>(null);
+  showCertificates = signal(false);
+  certificateCampType = signal<'manantial' | 'verbo' | 'crossworlds'>('manantial');
+
+  /**
+   * Gets certificate data for the selected camp type
+   */
+  certificateData = computed((): CertificateData[] => {
+    const type = this.certificateCampType();
+    let registrations: Registration[] = [];
+
+    switch (type) {
+      case 'manantial':
+        registrations = this.manantialRegistrations();
+        break;
+      case 'verbo':
+        registrations = this.verboRegistrations();
+        break;
+      case 'crossworlds':
+        registrations = this.crossworldsRegistrations();
+        break;
+    }
+
+    return registrations.map(r => ({
+      first_name: r.first_name,
+      last_name: r.last_name,
+      age_of_camper: r.age_of_camper,
+      country: r.country,
+      state: r.state,
+      camp_type: type,
+    }));
+  });
+
+  /**
+   * Downloads all photos for a given camp as a ZIP file
+   */
+  async downloadPhotosZip(type: 'manantial' | 'verbo' | 'crossworlds'): Promise<void> {
+    this.isDownloadingPhotos.set(true);
+    this.downloadingPhotosTab.set(type);
+
+    try {
+      let registrations: Registration[] = [];
+      switch (type) {
+        case 'manantial':
+          registrations = this.manantialRegistrations();
+          break;
+        case 'verbo':
+          registrations = this.verboRegistrations();
+          break;
+        case 'crossworlds':
+          registrations = this.crossworldsRegistrations();
+          break;
+      }
+
+      // Filter only registrations with photos
+      const withPhotos = registrations.filter(r => r.imagen_url);
+
+      if (withPhotos.length === 0) {
+        alert('No photos found for this camp.');
+        return;
+      }
+
+      const zip = new JSZip();
+      const folder = zip.folder(`${type}_photos`)!;
+      let downloaded = 0;
+
+      for (const reg of withPhotos) {
+        try {
+          const response = await fetch(reg.imagen_url);
+          if (!response.ok) continue;
+
+          const blob = await response.blob();
+          const ext = this.getFileExtension(reg.imagen_url, blob.type);
+          const fileName = `${reg.first_name}_${reg.last_name}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+          folder.file(`${fileName}.${ext}`, blob);
+          downloaded++;
+        } catch (err) {
+          console.warn(`Could not download photo for ${reg.first_name} ${reg.last_name}:`, err);
+        }
+      }
+
+      if (downloaded === 0) {
+        alert('Could not download any photos. Please check the image URLs.');
+        return;
+      }
+
+      const content = await zip.generateAsync({ type: 'blob' });
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      saveAs(content, `${type}_photos_${dateStr}.zip`);
+
+    } catch (error) {
+      console.error('Error downloading photos:', error);
+      this.errorMessage.set('Error downloading photos. Please try again.');
+    } finally {
+      this.isDownloadingPhotos.set(false);
+      this.downloadingPhotosTab.set(null);
+    }
+  }
+
+  /**
+   * Gets file extension from URL or MIME type
+   */
+  private getFileExtension(url: string, mimeType: string): string {
+    // Try to get extension from URL
+    const urlExt = url.split('?')[0].split('.').pop()?.toLowerCase();
+    if (urlExt && ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(urlExt)) {
+      return urlExt;
+    }
+    // Fallback to MIME type
+    const mimeMap: Record<string, string> = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/gif': 'gif',
+      'image/webp': 'webp',
+      'image/bmp': 'bmp',
+      'image/svg+xml': 'svg',
+    };
+    return mimeMap[mimeType] || 'jpg';
+  }
+
+  /**
+   * Opens certificate print view for a camp type
+   */
+  openCertificates(type: 'manantial' | 'verbo' | 'crossworlds'): void {
+    this.certificateCampType.set(type);
+    this.showCertificates.set(true);
+  }
+
+  /**
+   * Closes certificate view
+   */
+  closeCertificates(): void {
+    this.showCertificates.set(false);
+  }
+
+  /**
+   * Prints all certificates
+   */
+  printCertificates(): void {
+    window.print();
+  }
 
   /**
    * Exports all registrations to an Excel file with separate sheets

@@ -21,9 +21,9 @@ export class CertificateComponent {
 
   getCampName(type: string): string {
     const names: Record<string, string> = {
-      manantial: 'Fountain of Life Camp',
-      verbo: 'Word Camp',
-      crossworlds: 'CrossWorlds Connections Camp',
+      manantial: 'Campamento Manantial de Vida',
+      verbo: 'Campamento del Verbo',
+      crossworlds: 'Campamento CrossWorlds Connections',
     };
     return names[type] || type;
   }
@@ -43,7 +43,7 @@ export class CertificateComponent {
 
   getCampDate(): string {
     const now = new Date();
-    return now.toLocaleDateString('en-US', {
+    return now.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',

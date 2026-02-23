@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SupabaseService } from '../../services/supabase.service';
 import { AuthService } from '../../services/auth.service';
 import { CertificateComponent, CertificateData } from '../certificate/certificate';
+import { CertificateGeneratorService, CertificateGeneratorConfig } from '../../services/certificate-generator.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
@@ -68,6 +69,7 @@ export class DashboardComponent implements OnInit {
   private supabaseService = inject(SupabaseService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private certificateGenerator = inject(CertificateGeneratorService);
 
   // Computed - Filtrar registros por búsqueda
   filteredManantialRegistrations = computed(() => {
@@ -243,6 +245,11 @@ export class DashboardComponent implements OnInit {
   showCertificates = signal(false);
   certificateCampType = signal<'manantial' | 'verbo' | 'crossworlds'>('manantial');
 
+  // Image Certificate generation state
+  isGeneratingImageCertificates = signal(false);
+  imageCertificateProgress = signal({ current: 0, total: 0 });
+  imageGeneratingCampType = signal<string | null>(null);
+
   /**
    * Gets certificate data for the selected camp type
    */
@@ -380,6 +387,102 @@ export class DashboardComponent implements OnInit {
    */
   printCertificates(): void {
     window.print();
+  }
+
+  /**
+   * Generates image-based certificates as a ZIP file for a camp type
+   * Uses the template overlay method with the Canvas API
+   */
+  async downloadImageCertificatesZip(
+    type: 'manantial' | 'verbo' | 'crossworlds',
+    config?: Partial<CertificateGeneratorConfig>
+  ): Promise<void> {
+    this.isGeneratingImageCertificates.set(true);
+    this.imageGeneratingCampType.set(type);
+    this.imageCertificateProgress.set({ current: 0, total: 0 });
+
+    try {
+      // Get registrations for the selected camp
+      let registrations: Registration[] = [];
+      switch (type) {
+        case 'manantial':
+          registrations = this.manantialRegistrations();
+          break;
+        case 'verbo':
+          registrations = this.verboRegistrations();
+          break;
+        case 'crossworlds':
+          registrations = this.crossworldsRegistrations();
+          break;
+      }
+
+      if (registrations.length === 0) {
+        alert('No registrations found for this camp.');
+        return;
+      }
+
+      // Set total for progress tracking
+      this.imageCertificateProgress.set({ current: 0, total: registrations.length });
+
+      // Create ZIP file
+      const zip = new JSZip();
+      const folder = zip.folder(`certificados_${type}`)!;
+
+      // Generate certificates one by one
+      for (let i = 0; i < registrations.length; i++) {
+        const reg = registrations[i];
+        const fullName = `${reg.first_name} ${reg.last_name}`;
+
+        try {
+          const certificate = await this.certificateGenerator.generateCertificate({
+            fullName,
+            ...config,
+          });
+
+          folder.file(certificate.fileName, certificate.blob);
+
+          // Update progress
+          this.imageCertificateProgress.set({ current: i + 1, total: registrations.length });
+        } catch (err) {
+          console.warn(`Could not generate certificate for ${fullName}:`, err);
+        }
+      }
+
+      // Generate and download ZIP
+      const content = await zip.generateAsync({ type: 'blob' });
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      saveAs(content, `certificados_${type}_${dateStr}.zip`);
+
+    } catch (error) {
+      console.error('Error generating image certificates:', error);
+      this.errorMessage.set('Error generating certificates. Please try again.');
+    } finally {
+      this.isGeneratingImageCertificates.set(false);
+      this.imageGeneratingCampType.set(null);
+      this.imageCertificateProgress.set({ current: 0, total: 0 });
+    }
+  }
+
+  /**
+   * Downloads a single image certificate for a camper
+   */
+  async downloadSingleImageCertificate(
+    registration: Registration,
+    config?: Partial<CertificateGeneratorConfig>
+  ): Promise<void> {
+    try {
+      const fullName = `${registration.first_name} ${registration.last_name}`;
+      const certificate = await this.certificateGenerator.generateCertificate({
+        fullName,
+        ...config,
+      });
+
+      this.certificateGenerator.downloadCertificate(certificate);
+    } catch (error) {
+      console.error('Error generating certificate:', error);
+      alert('Error generating certificate. Please try again.');
+    }
   }
 
   /**

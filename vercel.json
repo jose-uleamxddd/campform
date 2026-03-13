@@ -1,5 +1,5 @@
 {
   "buildCommand": "npm run build:vercel",
-  "outputDirectory": "dist/crossworlds-camp-forms/browser",
+  "outputDirectory": "dist/crossworlds-CAMP-FORMS",
   "framework": "angular"
 }

@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-// Variables de entorno de Vercel
-const production = process.env.production === 'true';
-const supabaseUrl = process.env.supabaseUrl || '';
-const supabaseKey = process.env.supabaseKey || '';
+const production = process.env.VERCEL === '1';
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
 
 const envContent = `export const environment = {
   production: ${production},

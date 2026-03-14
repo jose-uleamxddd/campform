@@ -63,6 +63,7 @@ export interface Translations {
   registrationSuccess: string;
   pleaseUploadPhoto: string;
   maxFileSize: string;
+  maxFileSizeOptional: string;
   termsConditions: string;
   
   // Required field
@@ -137,6 +138,7 @@ export class TranslationService {
       registrationSuccess: 'Registration successful! Redirecting...',
       pleaseUploadPhoto: 'Please upload a photo of the camper',
       maxFileSize: 'Maximum file size: 5MB. Supported formats: JPG, PNG, GIF',
+      maxFileSizeOptional: 'Optional. Max file size: 5MB. Supported: JPG, PNG, GIF',
       termsConditions: 'By submitting, you agree to our Terms & Conditions',
       
       // Required field
@@ -203,6 +205,7 @@ export class TranslationService {
       registrationSuccess: '¡Registro exitoso! Redirigiendo...',
       pleaseUploadPhoto: 'Por favor sube una foto del campista',
       maxFileSize: 'Tamaño máximo de archivo: 5MB. Formatos soportados: JPG, PNG, GIF',
+      maxFileSizeOptional: 'Opcional. Tamaño máximo: 5MB. Formatos: JPG, PNG, GIF',
       termsConditions: 'Al enviar, aceptas nuestros Términos y Condiciones',
       
       // Required field

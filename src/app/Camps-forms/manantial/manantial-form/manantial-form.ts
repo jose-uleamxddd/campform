@@ -53,7 +53,7 @@ export class ManantialForm implements OnInit {
       whatsappNumber: ['', [Validators.required,Validators.minLength(10)]],
       busPlace: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      camperImage: [null, Validators.required] // Campo para la imagen
+      camperImage: [null] // Campo para la imagen
     });
     this.getCountry();
     this.loadInitialStates();
